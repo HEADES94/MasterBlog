@@ -20,13 +20,10 @@ def save_posts(posts):
         json.dump(posts, file, indent=4)
 
 
-# Find a single blog post by its unique ID
+# Retrieve a single post by ID
 def get_post_by_id(post_id):
     posts = load_posts()
-    for post in posts:
-        if post['id'] == post_id:
-            return post
-    return None
+    return next((post for post in posts if post['id'] == post_id), None)
 
 
 # Home route: display all blog posts
@@ -36,7 +33,7 @@ def index():
     return render_template('index.html', posts=blog_posts)
 
 
-# Route to add a new blog post (GET = form / POST = submit)
+# Route to add a new blog post
 @app.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
@@ -45,7 +42,8 @@ def add():
             "id": max([post["id"] for post in posts], default=0) + 1,
             "author": request.form.get("author"),
             "title": request.form.get("title"),
-            "content": request.form.get("content")
+            "content": request.form.get("content"),
+            "likes": 0  # initialize likes to 0
         }
         posts.append(new_post)
         save_posts(posts)
@@ -53,7 +51,7 @@ def add():
     return render_template('add.html')
 
 
-# Route to delete a blog post by ID
+# Route to delete a blog post
 @app.route('/delete/<int:post_id>')
 def delete(post_id):
     posts = load_posts()
@@ -72,7 +70,6 @@ def update(post_id):
         return "Post not found", 404
 
     if request.method == 'POST':
-        # Update post content from form
         post["author"] = request.form.get("author")
         post["title"] = request.form.get("title")
         post["content"] = request.form.get("content")
@@ -80,6 +77,18 @@ def update(post_id):
         return redirect(url_for('index'))
 
     return render_template('update.html', post=post)
+
+
+# Route to handle "liking" a post
+@app.route('/like/<int:post_id>')
+def like(post_id):
+    posts = load_posts()
+    for post in posts:
+        if post["id"] == post_id:
+            post["likes"] = post.get("likes", 0) + 1
+            break
+    save_posts(posts)
+    return redirect(url_for('index'))
 
 
 # Start the Flask development server
