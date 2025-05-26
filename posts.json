@@ -21,7 +21,7 @@
         "id": 4,
         "author": "Harper Lee",
         "title": "To Kill a Mockingbird",
-        "content": "In the racially divided American South, a young girl learns about justice and empathy as her father defends a black man accused of a crime he didn’t commit."
+        "content": "In the racially divided American South, a young girl learns about justice and empathy as her father defends a black man accused of a crime he didn\u2019t commit."
     },
     {
         "id": 5,
@@ -85,7 +85,7 @@
     },
     {
         "id": 15,
-        "author": "Charlotte Brontë",
+        "author": "Charlotte Bront\u00eb",
         "title": "Jane Eyre",
         "content": "An orphaned girl becomes a governess and falls in love with her mysterious employer, uncovering dark secrets."
     },
@@ -103,9 +103,9 @@
     },
     {
         "id": 18,
-        "author": "Gabriel García Márquez",
+        "author": "Gabriel Garc\u00eda M\u00e1rquez",
         "title": "One Hundred Years of Solitude",
-        "content": "The rise and fall of the Buendía family in the magical town of Macondo reflects the history of Latin America."
+        "content": "The rise and fall of the Buend\u00eda family in the magical town of Macondo reflects the history of Latin America."
     },
     {
         "id": 19,

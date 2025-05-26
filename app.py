@@ -6,10 +6,10 @@ app = Flask(__name__)
 DATA_FILE = 'posts.json'
 
 def load_posts():
-    if not os.path.exists(DATA_FILE):
-        return []
-    with open(DATA_FILE, 'r') as file:
-        return json.load(file)
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE, 'r') as file:
+            return json.load(file)
+    return []
 
 def save_posts(posts):
     with open(DATA_FILE, 'w') as file:
@@ -34,6 +34,13 @@ def add():
         save_posts(posts)
         return redirect(url_for('index'))
     return render_template('add.html')
+
+@app.route('/delete/<int:post_id>')
+def delete(post_id):
+    blog_posts = load_posts()
+    blog_posts = [post for post in blog_posts if post['id'] != post_id]
+    save_posts(blog_posts)
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
